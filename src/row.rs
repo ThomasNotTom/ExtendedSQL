@@ -36,7 +36,7 @@ impl Row {
         self.cells = cells;
     }
 
-    pub fn get_hash(mut self, headers: Vec<header::Header>) -> String {
+    pub fn get_hash(self, headers: Vec<header::Header>) -> String {
         let mut has_primary_key: bool = false;
         for header in &headers {
             for constraint in &header.constraint.constraints {
@@ -46,9 +46,9 @@ impl Row {
             }
         }
 
-        let mut out_hash: String = String::from("");
+        let out_hash;
 
-        if (has_primary_key) {
+        if has_primary_key {
             let mut total_hash = Sha256::new();
             for i in 0..headers.len() {
                 if headers[i]
