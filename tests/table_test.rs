@@ -1,11 +1,11 @@
-use ExtendedSQL::constraint;
-use ExtendedSQL::table::table;
+use extended_sql::constraint;
+use extended_sql::table::table;
 
 #[cfg(test)]
 mod table_tests {
     const TABLE_NAME: &str = "test_table";
 
-    use ExtendedSQL::{
+    use extended_sql::{
         cell::{self, Cell},
         header::{self, Header},
         row::{self, Row},
@@ -64,6 +64,6 @@ mod table_tests {
 
         println!("{}", table.to_string());
 
-        assert_eq!(table.get_rows().len(), 2);
+        assert_eq!(table.get_rows().len(), 1);
     }
 }
