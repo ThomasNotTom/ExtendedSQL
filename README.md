@@ -30,7 +30,7 @@ Server ON GET TO "/get_user" WITH QUERY (
 
 Given a user exists with `user_id` `1234` and a GET request to `/get_user?user_id=1234` on port `6543` would return
 
-```JSON
+```JS
 {
     user: {
         user_id: 1234,
