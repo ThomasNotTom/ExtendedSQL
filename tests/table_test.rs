@@ -1,21 +1,18 @@
-use extended_sql::constraint;
-use extended_sql::table::table;
-
 #[cfg(test)]
 mod table_tests {
     const TABLE_NAME: &str = "test_table";
 
     use extended_sql::{
         cell::{self, Cell},
+        constraint::{self, Constraint, ConstraintDatatypes},
         header::{self, Header},
         row::{self, Row},
+        table::{self, Table},
     };
-
-    use super::*;
 
     #[test]
     fn empty_initialisation() {
-        table::Table::new(TABLE_NAME.to_string(), vec![], vec![], None);
+        Table::new(TABLE_NAME.to_string(), vec![], vec![], None);
     }
 
     #[test]
@@ -23,7 +20,7 @@ mod table_tests {
     fn order_by_invalid_column() {
         const COLUMN_NAME: &str = "invalid_column";
 
-        table::Table::new(
+        Table::new(
             TABLE_NAME.to_string(),
             vec![],
             vec![],
@@ -36,8 +33,8 @@ mod table_tests {
         const COLUMN_NAME: &str = "column_1";
         let header: Header = header::Header::new(
             COLUMN_NAME.to_string(),
-            constraint::Constraint {
-                datatype: constraint::ConstraintDatatypes::INT,
+            Constraint {
+                datatype: ConstraintDatatypes::INT,
                 constraints: vec![],
             },
         );
