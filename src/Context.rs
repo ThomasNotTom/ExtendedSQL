@@ -14,6 +14,8 @@ impl Default for Context {
 }
 
 impl Context {
+    pub fn parse(_input: &str) {}
+
     pub fn new(database: BTreeMap<String, Box<Database::Database>>) -> Self {
         Context {
             databases: database,
