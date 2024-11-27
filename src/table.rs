@@ -1,16 +1,10 @@
 pub mod table {
-    use std::any::Any;
     use std::collections::BTreeMap;
-    use std::hash::Hash;
-    use std::ptr::null;
 
     use crate::cell::{Cell, CellData};
     use crate::header::Header;
     use crate::row::{self, Row};
     use crate::{constraint, header};
-
-    use fnv::FnvHasher;
-    use std::hash::Hasher;
 
     impl Clone for Table {
         fn clone(&self) -> Self {
@@ -23,9 +17,9 @@ pub mod table {
     }
 
     pub struct Table {
-        pub name: String,
-        pub headers: Vec<header::Header>,
-        pub body: BTreeMap<String, row::Row>,
+        name: String,
+        headers: Vec<header::Header>,
+        body: BTreeMap<String, row::Row>,
     }
 
     impl Default for Table {
@@ -73,7 +67,7 @@ pub mod table {
             let immut_widths: Vec<usize> = widths.clone();
 
             for width in immut_widths {
-                line_length += (width + 3)
+                line_length += width + 3
             }
 
             for _ in 0..line_length {
@@ -202,47 +196,28 @@ pub mod table {
             name: String,
             headers: Vec<header::Header>,
             rows: Vec<row::Row>,
-            order_by: String,
+            order_by: Option<String>,
         ) -> Self {
             let mut sort_by_header: Option<Header> = None;
-            for header in &headers {
-                if header.name == order_by {
-                    sort_by_header = Some(header.clone());
-                    break;
-                }
-            }
-
-            if sort_by_header.is_none() {
-                panic!("Column, {:}, not found in headers", order_by);
-            }
-
-            let mut has_primary_key: bool = false;
-            for header in &headers {
-                for constraint in &header.constraint.constraints {
-                    if constraint.type_id() == constraint::Constraints::PRIMARY_KEY.type_id() {
-                        has_primary_key = true;
+            if let Some(order) = order_by {
+                for header in &headers {
+                    if header.name == order {
+                        sort_by_header = Some(header.clone());
+                        break;
                     }
+                }
+
+                // After the loop, check if the column was found
+                if sort_by_header.is_none() {
+                    panic!("Column, {:?}, not found in headers", order);
                 }
             }
 
             let mut out_body: BTreeMap<String, row::Row> = BTreeMap::new();
 
-            if (has_primary_key) {
-                for row in rows {
-                    let mut total: u64 = 0;
-                    for i in 0..headers.len() {
-                        if headers[i]
-                            .constraint
-                            .contains(constraint::Constraints::PRIMARY_KEY)
-                        {
-                            let mut hasher = FnvHasher::default();
-                            row.cells[i].data.hash(&mut hasher);
-                            total += hasher.finish()
-                        }
-                    }
-                    let hash = row.clone().get_hash(headers.clone());
-                    out_body.insert(hash, row);
-                }
+            for row in rows {
+                let hash = row.clone().get_hash(headers.clone());
+                out_body.insert(hash, row);
             }
 
             Table {
@@ -250,6 +225,18 @@ pub mod table {
                 headers: headers,
                 body: out_body,
             }
+        }
+
+        pub fn get_headers(&self) -> &Vec<Header> {
+            return &self.headers;
+        }
+
+        pub fn get_rows(&self) -> &BTreeMap<String, Row> {
+            return &self.body;
+        }
+
+        pub fn get_name(&self) -> &String {
+            return &self.name;
         }
     }
 }
