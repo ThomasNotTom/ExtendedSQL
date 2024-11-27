@@ -4,7 +4,6 @@ use crate::cell::CellData;
 use crate::{cell, constraint, header};
 use sha2::{Digest, Sha256};
 use std::any::Any;
-use std::hash::{Hash, Hasher};
 
 pub struct Row {
     pub cells: Vec<cell::Cell>,
@@ -50,25 +49,22 @@ impl Row {
         let mut out_hash: String = String::from("");
 
         if (has_primary_key) {
-            let mut total: u64 = 0;
+            let mut total_hash = Sha256::new();
             for i in 0..headers.len() {
                 if headers[i]
                     .constraint
                     .contains(constraint::Constraints::PRIMARY_KEY)
                 {
-                    let mut hasher = fnv::FnvHasher::default();
-                    if (self.cells[i].data == CellData::Null) {
-                        "null".hash(&mut hasher);
-                    } else {
-                        self.cells[i].data.hash(&mut hasher);
+                    let mut hasher = Sha256::new();
+                    match &self.cells[i].data {
+                        CellData::Null => hasher.update("null"),
+                        CellData::Text(text) => hasher.update(text),
                     }
-                    total += hasher.finish()
+                    total_hash.update(hasher.finalize());
                 }
             }
 
-            let mut hasher = Sha256::new();
-            hasher.update(total.to_be_bytes());
-            out_hash = format!("{:x}", hasher.finalize());
+            out_hash = format!("{:x}", total_hash.finalize());
         } else {
             let mut hasher = Sha256::new();
             hasher.update(Utc::now().timestamp_micros().to_be_bytes());
