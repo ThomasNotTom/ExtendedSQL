@@ -2,8 +2,6 @@ use crate::table::Table;
 use std::cell::RefCell;
 use std::collections::BTreeMap;
 
-use std::rc::Rc;
-
 pub struct Database {
     pub name: String,
     pub tables: BTreeMap<String, RefCell<Table>>,
@@ -23,7 +21,7 @@ impl ToString for Database {
         let mut out = String::from("");
         out.push_str(" -- ");
         out.push_str(&self.name);
-        out.push_str(" -- ");
+        out.push_str(" -- \n");
         for table in &self.tables {
             out.push_str(table.1.borrow().to_string().as_str());
         }

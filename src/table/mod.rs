@@ -56,39 +56,54 @@ impl ToString for Table {
             widths.push(final_width);
         }
 
-        let mut line_length = 1 + 12;
-
-        let mut line: String = String::from("");
+        let mut header_length = 1 + 12 + self.name.len();
+        let mut body_length = 1 + 12;
 
         let immut_widths: Vec<usize> = widths.clone();
 
         for width in immut_widths {
-            line_length += width + 3
+            body_length += width + 3
         }
 
-        for _ in 0..line_length {
-            line.push('-');
+        if header_length < body_length {
+            header_length = body_length;
         }
 
-        out.push_str(line.as_str());
+        let mut header_line: String = String::from("");
+        let mut body_line: String = String::from("");
+
+        for _ in 0..body_length {
+            body_line.push('-');
+        }
+
+        for _ in 0..header_length {
+            header_line.push('-');
+        }
+
+        out.push_str(header_line.as_str());
         out.push_str("\n");
 
         out.push_str("| ");
 
-        for _ in 0..(line_length - &self.name.len() - 3) / 2 {
+        for _ in 0..(header_length - &self.name.len() - 3) / 2 {
             out.push_str(" ");
         }
         out.push_str("\x1b[4m");
         out.push_str("\x1b[1m");
         out.push_str(&self.name);
         out.push_str("\x1b[0m");
-        for _ in (line_length - &self.name.len() - 3) / 2..(line_length - &self.name.len() - 3) {
+        for _ in (header_length - &self.name.len() - 3) / 2..(header_length - &self.name.len() - 3)
+        {
             out.push_str(" ");
         }
 
         out.push_str("|\n");
 
-        out.push_str(line.as_str());
+        if header_length < body_length {
+            out.push_str(body_line.as_str());
+        } else {
+            out.push_str(header_line.as_str());
+        }
         out.push_str("\n");
 
         let mut header_data = String::from("|");
@@ -135,7 +150,7 @@ impl ToString for Table {
 
         out.push_str(&header_data.as_str());
         out.push_str("\n");
-        out.push_str(&line.as_str());
+        out.push_str(&body_line.as_str());
         out.push_str("\n");
 
         let mut body_data = String::from("");
@@ -175,8 +190,9 @@ impl ToString for Table {
         }
 
         out.push_str(&body_data);
-
-        out.push_str(&line.as_str());
+        if body_data.len() != 0 {
+            out.push_str(&body_line.as_str());
+        }
         out.push_str("\n");
 
         return out.to_string();
@@ -184,6 +200,13 @@ impl ToString for Table {
 }
 
 impl Table {
+    pub fn default_with_name(name: String) -> Table {
+        Table {
+            name: name,
+            headers: vec![],
+            body: BTreeMap::<String, Row>::new(),
+        }
+    }
     pub fn new(
         name: String,
         headers: Vec<header::Header>,

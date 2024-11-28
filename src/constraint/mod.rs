@@ -1,10 +1,10 @@
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum ConstraintDatatypes {
     STRING,
     INT,
 }
 
-#[derive(Clone, Copy, PartialEq)]
+#[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Constraints {
     PrimaryKey,
     NotNull,
@@ -26,6 +26,7 @@ impl Clone for Constraint {
     }
 }
 
+#[derive(Debug)]
 pub struct Constraint {
     pub datatype: ConstraintDatatypes,
     pub constraints: Vec<Constraints>,
