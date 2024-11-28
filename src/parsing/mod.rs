@@ -6,18 +6,6 @@ use crate::{
 };
 
 #[derive(Debug)]
-pub struct NamingData {
-    name: String,
-}
-
-#[derive(Debug)]
-pub struct MathsData {
-    left_var: String,
-    operator: String,
-    right_var: String,
-}
-
-#[derive(Debug)]
 pub struct CreateDatabase {
     pub name: String,
 }
@@ -59,9 +47,8 @@ pub fn parse_create_database(tokens: Vec<PreParseData>) -> ContextElement {
     let name_token = &tokens[2];
 
     let name = match name_token {
-        PreParseData::UserText(text) => text.clone(), // Clone the string for safe ownership
+        PreParseData::UserText(text) => text.clone(),
         PreParseData::Keyword(keyword) => keyword_to_string(keyword.clone()),
-        _ => panic!(""),
     };
 
     return ContextElement::CreateDatabase(CreateDatabase {
