@@ -1,0 +1,5 @@
+CREATE DATABASE MyDatabase;
+
+CREATE TABLE MyDatabase.users;
+CREATE TABLE MyDatabase.items;
+CREATE TABLE MyDatabase.transactions;
