@@ -5,7 +5,6 @@ pub enum ConstraintDatatypes {
 }
 
 #[derive(Clone, Copy, PartialEq)]
-#[warn(non_camel_case_types)]
 pub enum Constraints {
     PrimaryKey,
     NotNull,
