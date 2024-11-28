@@ -1,5 +1,6 @@
 use crate::constraint::Constraint;
 
+#[derive(Debug)]
 pub struct Header {
     pub name: String,
     pub constraint: Constraint,
