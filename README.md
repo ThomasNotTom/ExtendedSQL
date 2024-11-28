@@ -69,7 +69,7 @@ Then you need to move the binary to your `/usr/bin/` folder.
 sudo mv ./target/release/extended_sql /usr/bin/
 ```
 
-### Adding to your path
+#### (b) Adding to your path
 
 Add the output binary to your path
 
