@@ -17,7 +17,10 @@ pub fn execute_create_table(context: &mut Context, data: CreateTable) {
         .get_mut(database_name)
         .expect("")
         .borrow_mut();
-    database.add_table(table_name.to_string(), RefCell::new(Table::default()));
+    database.add_table(
+        table_name.to_string(),
+        RefCell::new(Table::default_with_name(table_name.to_string())),
+    );
 }
 
 pub fn execute_create_database(context: &mut Context, data: CreateDatabase) {
