@@ -33,10 +33,10 @@ impl ToString for Database {
 }
 
 impl Database {
-    pub fn new(name: String, tables: BTreeMap<String, Rc<Table>>) -> Self {
+    pub fn new(name: String, tables: BTreeMap<String, RefCell<Table>>) -> Self {
         Database { name, tables }
     }
-    pub fn add_table(&mut self, name: String, table: Rc<Table>) {
+    pub fn add_table(&mut self, name: String, table: RefCell<Table>) {
         self.tables.insert(name, table);
     }
 }
