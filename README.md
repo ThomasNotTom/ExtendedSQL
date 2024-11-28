@@ -41,6 +41,16 @@ Given a user exists with `user_id` `1234` and a GET request to `/get_user?user_i
 }
 ```
 
+## What is the current syntax?
+
+```
+CREATE DATABASE MyDatabase;
+
+CREATE TABLE MyDatabase.users;
+CREATE TABLE MyDatabase.items;
+CREATE TABLE MyDatabase.transactions;
+```
+
 ## Why is this needed?
 
 ESQL is not designed to be a replacement to a backend or database, however is intended to be used as a temporary placeholder for both. This is particularly useful for programmers who want to quickly spin up a backend/database, and have it be configured quickly so other functionality (mainly frontend) can be worked on.
