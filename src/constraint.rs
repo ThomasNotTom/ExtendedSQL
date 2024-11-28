@@ -7,8 +7,8 @@ pub enum ConstraintDatatypes {
 #[derive(Clone, Copy, PartialEq)]
 #[warn(non_camel_case_types)]
 pub enum Constraints {
-    PRIMARY_KEY,
-    NOT_NULL,
+    PrimaryKey,
+    NotNull,
 }
 
 pub fn constraint_to_string(constraint: &ConstraintDatatypes) -> String {
@@ -48,7 +48,7 @@ impl Constraint {
         return false;
     }
     pub fn make_not_null(mut self) -> Self {
-        self.constraints.push(Constraints::NOT_NULL);
+        self.constraints.push(Constraints::NotNull);
         return self;
     }
 }

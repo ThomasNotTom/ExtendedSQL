@@ -39,10 +39,7 @@ impl ToString for Table {
             let header: &header::Header = &self.headers[i];
             let datatype = constraint::constraint_to_string(&header.constraint.datatype);
             let mut final_width: usize = header.name.len() + datatype.len() + 3;
-            if !header
-                .constraint
-                .contains(constraint::Constraints::NOT_NULL)
-            {
+            if !header.constraint.contains(constraint::Constraints::NotNull) {
                 final_width += 1;
             }
             for j in &self.body {
@@ -108,21 +105,18 @@ impl ToString for Table {
             let mut offset = 0;
             if header
                 .constraint
-                .contains(constraint::Constraints::PRIMARY_KEY)
+                .contains(constraint::Constraints::PrimaryKey)
             {
                 header_data.push_str("\x1b[4m");
             }
             header_data.push_str(&header.name);
-            if !header
-                .constraint
-                .contains(constraint::Constraints::NOT_NULL)
-            {
+            if !header.constraint.contains(constraint::Constraints::NotNull) {
                 header_data.push_str("?");
                 offset += 1;
             }
             if header
                 .constraint
-                .contains(constraint::Constraints::PRIMARY_KEY)
+                .contains(constraint::Constraints::PrimaryKey)
             {
                 header_data.push_str("\x1b[0m");
             }

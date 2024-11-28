@@ -40,7 +40,7 @@ impl Row {
         let mut has_primary_key: bool = false;
         for header in &headers {
             for constraint in &header.constraint.constraints {
-                if constraint.type_id() == constraint::Constraints::PRIMARY_KEY.type_id() {
+                if constraint.type_id() == constraint::Constraints::PrimaryKey.type_id() {
                     has_primary_key = true;
                 }
             }
@@ -53,7 +53,7 @@ impl Row {
             for i in 0..headers.len() {
                 if headers[i]
                     .constraint
-                    .contains(constraint::Constraints::PRIMARY_KEY)
+                    .contains(constraint::Constraints::PrimaryKey)
                 {
                     let mut hasher = Sha256::new();
                     match &self.cells[i].data {
