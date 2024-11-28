@@ -1,16 +1,16 @@
 use crate::table::Table;
 use std::collections::BTreeMap;
 
-use std::{cell::RefCell, rc};
+use std::{cell::RefCell, rc::Rc};
 
 pub struct Database {
-    pub tables: BTreeMap<String, rc::Rc<RefCell<Table>>>,
+    pub tables: BTreeMap<String, Rc<RefCell<Table>>>,
 }
 
 impl Default for Database {
     fn default() -> Self {
         Database {
-            tables: BTreeMap::<String, rc::Rc<RefCell<Table>>>::new(),
+            tables: BTreeMap::<String, Rc<RefCell<Table>>>::new(),
         }
     }
 }
@@ -28,10 +28,10 @@ impl ToString for Database {
 }
 
 impl Database {
-    pub fn new(tables: BTreeMap<String, rc::Rc<RefCell<Table>>>) -> Self {
+    pub fn new(tables: BTreeMap<String, Rc<RefCell<Table>>>) -> Self {
         Database { tables }
     }
-    pub fn add_table(&mut self, name: String, table: rc::Rc<RefCell<Table>>) {
+    pub fn add_table(&mut self, name: String, table: Rc<RefCell<Table>>) {
         self.tables.insert(name, table);
     }
 }
