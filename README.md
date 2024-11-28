@@ -4,6 +4,91 @@
 
 ExtendedSQL (ESQL) is a programming language designed to link simple backend requests directly to the database layer of the stack.
 
+## How to run
+
+### Prerequisites
+
+1. [git](https://git-scm.com/downloads)
+2. [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+
+## Running
+
+Clone the repository into a folder with either
+
+1. https: `git clone https://github.com/ThomasNotTom/ExtendedSQL.git`
+2. SSH: `git clone git@github.com:ThomasNotTom/ExtendedSQL.git`
+
+Go into the created folder
+
+```Bash
+cd ExtendedSQL
+```
+
+Build with
+
+```Bash
+cargo build
+```
+
+Run with
+
+```Bash
+cargo run {input_file}.esql
+```
+
+replacing `{input_file}.esql`, with the file you'd like to open
+
+The complete installation process using SSH looks like this
+
+```Bash
+git clone git@github.com:ThomasNotTom/ExtendedSQL.git
+
+cd ExtendedSQL
+
+cargo build
+cargo run ./examples/example1.esql
+```
+
+## Installing
+
+To install you can either (a) add the binary in your `/usr/bin/` or (b) add it to your path.
+
+### For both
+
+First you need to build with the `--release` flag.
+
+```Bash
+cargo build --release
+```
+
+#### (a) Adding the binary
+
+Then you need to move the binary to your `/usr/bin/` folder.
+
+```Bash
+sudo mv ./target/release/extended_sql /usr/bin/
+```
+
+### Adding to your path
+
+Add the output binary to your path
+
+1. For zsh:
+
+```Bash
+echo 'export PATH="$(pwd)/target/release/build/:$PATH"' >> ~/.zshrc
+
+source ~/.zshrc
+```
+
+2. For bash:
+
+```Bash
+echo 'export PATH="$(pwd)/target/release/build/:$PATH"' >> ~/.bashrc
+
+source ~/.bashrc
+```
+
 ## How is it used?
 
 (syntax subject to change)
