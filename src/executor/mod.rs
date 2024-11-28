@@ -1,8 +1,9 @@
-use std::{cell::RefCell, collections::BTreeMap, rc::Rc};
+use std::cell::RefCell;
+use std::collections::BTreeMap;
 
 use crate::{
     context::Context,
-    database::{self, Database},
+    database::Database,
     parsing::{ContextElement, CreateDatabase},
 };
 

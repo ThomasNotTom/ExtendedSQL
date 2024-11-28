@@ -1,5 +1,3 @@
-use crate::context::Context;
-
 #[derive(Debug)]
 pub struct NamingData {
     name: String,

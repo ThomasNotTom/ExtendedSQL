@@ -2,8 +2,6 @@ use crate::table::Table;
 use std::cell::RefCell;
 use std::collections::BTreeMap;
 
-use std::rc::Rc;
-
 pub struct Database {
     pub name: String,
     pub tables: BTreeMap<String, RefCell<Table>>,

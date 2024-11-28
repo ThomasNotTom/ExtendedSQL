@@ -2,8 +2,6 @@ use crate::database::Database;
 
 use std::cell::RefCell;
 use std::collections::BTreeMap;
-use std::ops::Deref;
-use std::rc::Rc;
 
 pub struct Context {
     pub databases: BTreeMap<String, RefCell<Database>>,
