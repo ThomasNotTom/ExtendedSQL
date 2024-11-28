@@ -2,8 +2,6 @@ pub mod cell;
 pub mod constraint;
 pub mod context;
 pub mod database;
-pub mod executor;
 pub mod header;
-pub mod parsing;
 pub mod row;
 pub mod table;
