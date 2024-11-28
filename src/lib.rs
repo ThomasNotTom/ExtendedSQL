@@ -5,5 +5,6 @@ pub mod database;
 pub mod executor;
 pub mod header;
 pub mod parsing;
+pub mod preparser;
 pub mod row;
 pub mod table;
