@@ -1,37 +1,22 @@
-use std::{
-    borrow::Borrow,
-    cell::{Ref, RefCell},
-    collections::BTreeMap,
-    ops::Deref,
-    rc::Rc,
-};
+use std::{cell::RefCell, collections::BTreeMap, rc::Rc};
 
 use crate::{
     context::Context,
-    database::Database,
-    parsing::{ContextElement, CreateDatabase, CreateTable},
-    table::Table,
+    database::{self, Database},
+    parsing::{ContextElement, CreateDatabase},
 };
 
 pub fn execute_create_database(context: &mut Context, data: CreateDatabase) {
-    let name = &data.name;
+    let name = &data.database_name.to_string();
     context.databases.insert(
-        name.clone(),
-        RefCell::new(Database::new(name.clone(), BTreeMap::new())),
+        name.to_string(),
+        RefCell::new(Database::new(name.to_string(), BTreeMap::new())),
     );
-}
-
-pub fn execute_create_table(context: &mut Context, data: CreateTable) {
-    let table_name: String = data.table_name;
-    let database_name: &String = &data.database_name;
-    let database = context.databases.get_mut(database_name).expect("");
-    database.add_table(table_name, RefCell::new(Table::default()));
 }
 
 pub fn execute_line(context: &mut Context, element: ContextElement) {
     match element {
         ContextElement::CreateDatabase(data) => execute_create_database(context, data),
-        ContextElement::CreateTable(data) => execute_create_table(context, data),
     }
 }
 
