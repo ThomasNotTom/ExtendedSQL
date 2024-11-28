@@ -1,4 +1,4 @@
-use crate::database::Database;
+use crate::_database::Database;
 
 use std::collections::BTreeMap;
 
