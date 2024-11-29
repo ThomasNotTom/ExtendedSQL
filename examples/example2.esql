@@ -1,0 +1,17 @@
+CREATE DATABASE MyDatabase;
+
+CREATE TABLE MyDatabase.users (
+    user_id INT,
+    first_name STRING,
+    last_name STRING,
+);
+CREATE TABLE MyDatabase.items (
+    item_id INT,
+    name STRING,
+);
+CREATE TABLE MyDatabase.transactions (
+    transaction_id INT,
+    user_id INT,
+    item_id INT,
+    date STRING,
+);
