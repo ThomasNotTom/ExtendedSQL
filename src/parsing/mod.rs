@@ -28,6 +28,7 @@ pub fn parse_create_table(tokens: Vec<PreParseData>) -> ContextElement {
     let names_string = match names_pre_parsed {
         PreParseData::Keyword(keyword) => keyword_to_string(*keyword),
         PreParseData::UserText(text) => text.to_string(),
+        PreParseData::NormalBracketText(text) => text.to_string(),
     };
     let names = names_string.split(".").collect::<Vec<&str>>();
 
@@ -48,6 +49,7 @@ pub fn parse_create_database(tokens: Vec<PreParseData>) -> ContextElement {
 
     let name = match name_token {
         PreParseData::UserText(text) => text.clone(),
+        PreParseData::NormalBracketText(text) => text.clone(),
         PreParseData::Keyword(keyword) => keyword_to_string(keyword.clone()),
     };
 
